@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Los Ángeles 3D Map</title>
+
+
+<script src='https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css' rel='stylesheet' />
+
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.min.js'></script>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.css' type='text/css' />
+
+<style>
+      body { margin:0; padding:0; } 
+      #map { position:absolute; top:0; bottom:0; height:100%; width:100%;}
+	  #coordenadas {
+        display: block;
+        position: relative;
+        margin: 0px auto;
+        width: 40%;
+        padding: 5px;
+        border: none;
+        border-radius: 7px;
+        font-size: 15px;
+		font-family: Montserrat;
+        text-align: center;
+        color: #000;
+        background: #D6EAF8;
+    }
+    </style>
+
+  </head>
+
+
+  <body>
+ 
+<div id='map'></div>
+<pre id='coordenadas'></pre>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiaWFuaWthcnN0b3ciLCJhIjoiY2pkaHFvMGU1MTFycDJ5cDRnb3RqbGVwdCJ9.TiNWEA61iHqj1ji6qbbptw';
+var map = new mapboxgl.Map({
+    container: 'map', // Container ID
+    style: 'mapbox://styles/ianikarstow/ckidcpwxy22ry19nzati2cxfd', // style 
+    center: [-118.54160, 34.10500], // position [lng, lat]
+	pitch: 25, //tilt
+	bearing: 10, //start view orientation
+    zoom: 11 // zoom
+});
+
+map.addControl(new MapboxGeocoder({   // search box
+    accessToken: mapboxgl.accessToken
+}));
+
+	map.addControl(new mapboxgl.NavigationControl());  //navigation  
+	map.addControl(new mapboxgl.FullscreenControl());  //fullscreen button
+	map.addControl(new mapboxgl.GeolocateControl({     //north      
+    positionOptions: {
+        enableHighAccuracy: true
+    },
+    trackUserLocation: true                            //location of the user 
+}));
+map.on('mousemove', function (e) {
+    document.getElementById('coordenadas').innerHTML =
+        JSON.stringify(e.lngLat);
+});
+</script>
+
+
+  </body>
+
+
+</html>
+
